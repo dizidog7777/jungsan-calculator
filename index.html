@@ -331,10 +331,7 @@ function recalc(){
   document.getElementById('difference').textContent =
     (diff >= 0 ? '+' : '') + fmt(diff) + '억';
 
-  document.getElementById('calcLine').innerHTML =
-    '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
-    '억</b> + 분담금 <b>' + contributionCalcText +
-    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b> · 신축 <b>' + fmt(assetValue) + '억</b> · 차이 <b>' + (diff >= 0 ? '+' : '') + fmt(diff) + '억</b>';
+  document.getElementById('calcLine').innerHTML =\n    '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +\n    '억</b> + 분담금 <b>' + contributionCalcText +\n    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
 }
 
 window.addEventListener('load', function(){
