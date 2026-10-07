@@ -231,7 +231,7 @@ button{-webkit-appearance:none;appearance:none}
     <p><strong>8. 일반분양가:</strong> 기본 시나리오 2억원/평, 보수 시나리오 1.5억원/평을 선택해 비교합니다.</p>
     <p><strong>9. 완공 후 신축가치:</strong> 비교를 위해 2억원/평을 단순 적용합니다. 실제 완공시점 시장가치는 평형, 조망, 동·호수, 상품성, 시장상황 등에 따라 달라질 수 있습니다.</p>
     <p><strong>10. 지분비례 면적 초과:</strong> 자신의 단순 지분비례 사업면적보다 큰 평형을 선택하면 부족면적을 선택한 일반분양가와 같은 평당가로 추가배정받는다고 단순 가정합니다. 실제 추가분담금 산식과는 다를 수 있습니다.</p>
-    <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>
+    <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>\n    <p><strong>12. 단순 ROI:</strong> (신축 예상가치 - 총투입액) ÷ 총투입액 × 100으로 계산합니다. 다만 건물 매입가가 0억원인 기본 상태에서는 비교 왜곡을 피하기 위해 ROI를 0%로 표시하며, 본인의 실제 건물 매입가를 입력하면 계산됩니다. 확정 수익률을 의미하지 않습니다.</p>
   </section>
 
   <div class="footer">
@@ -334,7 +334,7 @@ function recalc(){
   document.getElementById('calcLine').innerHTML =
     '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
     '억</b> + 분담금 <b>' + contributionCalcText +
-    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
+    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b> · 신축 <b>' + fmt(assetValue) + '억</b> · 차이 <b>' + (diff >= 0 ? '+' : '') + fmt(diff) + '억</b>';
 }
 
 window.addEventListener('load', function(){
