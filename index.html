@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>중산시범 · 제로500 전략 가정 시나리오 · 희망 평형 예상 분담금 미니 계산기</title>
 <style>
 *{box-sizing:border-box}
@@ -107,26 +110,26 @@ button{-webkit-appearance:none;appearance:none}
     <div class="group">
       <div class="group-title">보유 평형</div>
       <div class="btn-grid three" id="ownerButtons">
-        <button type="button" class="choice-btn active" data-owner="18" onclick="setOwner(18,this)">18평</button>
-        <button type="button" class="choice-btn" data-owner="15" onclick="setOwner(15,this)">15평</button>
-        <button type="button" class="choice-btn" data-owner="12" onclick="setOwner(12,this)">12평</button>
+        <button type="button" class="choice-btn active" data-owner="18">18평</button>
+        <button type="button" class="choice-btn" data-owner="15">15평</button>
+        <button type="button" class="choice-btn" data-owner="12">12평</button>
       </div>
     </div>
 
     <div class="group">
       <div class="group-title">희망 평형</div>
       <div class="btn-grid four" id="targetButtons">
-        <button type="button" class="choice-btn active" data-target="34" onclick="setTarget(34,this)">34평</button>
-        <button type="button" class="choice-btn" data-target="30" onclick="setTarget(30,this)">30평</button>
-        <button type="button" class="choice-btn" data-target="25" onclick="setTarget(25,this)">25평</button>
-        <button type="button" class="choice-btn" data-target="20" onclick="setTarget(20,this)">20평</button>
+        <button type="button" class="choice-btn active" data-target="34">34평</button>
+        <button type="button" class="choice-btn" data-target="30">30평</button>
+        <button type="button" class="choice-btn" data-target="25">25평</button>
+        <button type="button" class="choice-btn" data-target="20">20평</button>
       </div>
     </div>
 
     <div class="group">
       <label class="group-title" for="buildingInput">건물 매입가</label>
       <div class="input-shell">
-        <input id="buildingInput" type="number" inputmode="decimal" min="0" max="999" step="0.1" value="0" placeholder="0" oninput="recalc()" onchange="recalc()">
+        <input id="buildingInput" type="number" inputmode="decimal" min="0" max="999" step="0.1" value="0" placeholder="0">
         <span class="unit">억원</span>
         <span class="input-help">본인 매입가 입력</span>
       </div>
@@ -135,8 +138,8 @@ button{-webkit-appearance:none;appearance:none}
     <div class="group">
       <div class="group-title">분양가 가정</div>
       <div class="btn-grid two" id="saleButtons">
-        <button type="button" class="choice-btn scenario-btn active" data-sale="2" onclick="setSale(2,this)">2.0억/평</button>
-        <button type="button" class="choice-btn scenario-btn" data-sale="1.5" onclick="setSale(1.5,this)">1.5억/평</button>
+        <button type="button" class="choice-btn scenario-btn active" data-sale="2">2.0억/평</button>
+        <button type="button" class="choice-btn scenario-btn" data-sale="1.5">1.5억/평</button>
       </div>
     </div>
 
@@ -237,112 +240,146 @@ button{-webkit-appearance:none;appearance:none}
   </section>
 
   <div class="footer">
-    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.
+    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R3</strong>
   </div>
 </main>
 </div>
 
 <script>
-var OWNER_DATA = {
-  18:{share:7.9, area:40, land:7},
-  15:{share:6.4, area:32, land:6},
-  12:{share:5.2, area:26, land:5}
-};
-var selectedOwner = 18;
-var selectedTarget = 34;
-var selectedSale = 2.0;
+(function(){
+  'use strict';
 
-function fmt(n){
-  n = Math.round(n * 10) / 10;
-  return Number.isInteger(n) ? String(n) : n.toFixed(1);
-}
+  var OWNER_DATA = {
+    18:{share:7.9, area:40, land:7},
+    15:{share:6.4, area:32, land:6},
+    12:{share:5.2, area:26, land:5}
+  };
 
-function readBuilding(){
-  var el = document.getElementById('buildingInput');
-  var n = parseFloat(el.value);
-  if (!Number.isFinite(n) || n < 0) return 0;
-  if (n > 999) return 999;
-  return n;
-}
+  var selectedOwner = 18;
+  var selectedTarget = 34;
+  var selectedSale = 2.0;
 
-function activateButtons(containerId, clicked){
-  var buttons = document.querySelectorAll('#' + containerId + ' .choice-btn');
-  for (var i = 0; i < buttons.length; i++){
-    buttons[i].classList.remove('active');
+  function byId(id){
+    return document.getElementById(id);
   }
-  clicked.classList.add('active');
-}
 
-function setOwner(value, button){
-  selectedOwner = value;
-  activateButtons('ownerButtons', button);
-  recalc();
-}
+  function fmt(n){
+    n = Math.round(Number(n) * 10) / 10;
+    return Math.abs(n - Math.round(n)) < 0.000001 ? String(Math.round(n)) : n.toFixed(1);
+  }
 
-function setTarget(value, button){
-  selectedTarget = value;
-  activateButtons('targetButtons', button);
-  recalc();
-}
+  function readBuilding(){
+    var input = byId('buildingInput');
+    var n = parseFloat(input.value);
+    if (!isFinite(n) || n < 0) return 0;
+    if (n > 999) n = 999;
+    return n;
+  }
 
-function setSale(value, button){
-  selectedSale = value;
-  activateButtons('saleButtons', button);
-  recalc();
-}
+  function setActive(containerId, targetButton){
+    var buttons = document.querySelectorAll('#' + containerId + ' .choice-btn');
+    for (var i = 0; i < buttons.length; i++){
+      buttons[i].classList.toggle('active', buttons[i] === targetButton);
+    }
+  }
 
-function recalc(){
-  var d = OWNER_DATA[selectedOwner];
-  var building = readBuilding();
-  var totalCost = d.area * 0.4;
-  var balanceArea = d.area - selectedTarget;
-  var contribution;
+  function recalc(){
+    var d = OWNER_DATA[selectedOwner];
+    var building = readBuilding();
 
-  if (balanceArea >= 0){
-    var saleRevenue = balanceArea * selectedSale;
-    contribution = totalCost - saleRevenue;
+    // 사업비 = 단순 사업면적 × 0.4억/평
+    var totalCost = d.area * 0.4;
+    var balanceArea = d.area - selectedTarget;
+    var contribution;
+
+    if (balanceArea >= 0){
+      contribution = totalCost - (balanceArea * selectedSale);
+    } else {
+      contribution = totalCost + (Math.abs(balanceArea) * selectedSale);
+    }
+
+    var totalInput = building + d.land + contribution;
+    var assetValue = selectedTarget * 2.0;
+    var diff = assetValue - totalInput;
+
+    // 사용자가 건물 매입가를 입력하기 전에는 요청대로 0% 표시
+    var roi = 0;
+    if (building > 0 && totalInput !== 0){
+      roi = (diff / totalInput) * 100;
+    }
+
+    var contributionText = contribution < 0
+      ? '-' + fmt(Math.abs(contribution)) + '억'
+      : '약 ' + fmt(contribution) + '억';
+
+    var contributionCalcText = contribution < 0
+      ? '-' + fmt(Math.abs(contribution)) + '억'
+      : fmt(contribution) + '억';
+
+    byId('resultTitle').textContent =
+      selectedOwner + '평 보유 → ' + selectedTarget + '평 선택';
+
+    byId('resultMeta').textContent =
+      '대지지분 약 ' + fmt(d.share) +
+      '평 · 제로500 단순 사업면적 약 ' + fmt(d.area) + '평';
+
+    byId('landChip').textContent = '토지 ' + fmt(d.land) + '억 고정';
+    byId('contribution').textContent = contributionText;
+    byId('buildingResult').textContent = fmt(building) + '억';
+    byId('totalInput').textContent = fmt(totalInput) + '억';
+    byId('assetValue').textContent = fmt(assetValue) + '억';
+    byId('roiValue').textContent =
+      building > 0 ? ((roi >= 0 ? '+' : '') + Math.round(roi) + '%') : '0%';
+
+    // 네이비 박스는 핵심 투입비 요약만 표시
+    byId('calcLine').innerHTML =
+      '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
+      '억</b> + 분담금 <b>' + contributionCalcText +
+      '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
+  }
+
+  function init(){
+    var ownerButtons = document.querySelectorAll('#ownerButtons .choice-btn');
+    for (var i = 0; i < ownerButtons.length; i++){
+      ownerButtons[i].addEventListener('click', function(){
+        selectedOwner = Number(this.getAttribute('data-owner'));
+        setActive('ownerButtons', this);
+        recalc();
+      });
+    }
+
+    var targetButtons = document.querySelectorAll('#targetButtons .choice-btn');
+    for (var j = 0; j < targetButtons.length; j++){
+      targetButtons[j].addEventListener('click', function(){
+        selectedTarget = Number(this.getAttribute('data-target'));
+        setActive('targetButtons', this);
+        recalc();
+      });
+    }
+
+    var saleButtons = document.querySelectorAll('#saleButtons .choice-btn');
+    for (var k = 0; k < saleButtons.length; k++){
+      saleButtons[k].addEventListener('click', function(){
+        selectedSale = Number(this.getAttribute('data-sale'));
+        setActive('saleButtons', this);
+        recalc();
+      });
+    }
+
+    var buildingInput = byId('buildingInput');
+    buildingInput.addEventListener('input', recalc);
+    buildingInput.addEventListener('change', recalc);
+    buildingInput.addEventListener('keyup', recalc);
+
+    recalc();
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    var extraArea = Math.abs(balanceArea);
-    contribution = totalCost + (extraArea * selectedSale);
+    init();
   }
-
-  var totalInput = building + d.land + contribution;
-  var assetValue = selectedTarget * 2.0;
-  var diff = assetValue - totalInput;
-  var roi = (building > 0 && totalInput !== 0) ? (diff / totalInput) * 100 : 0;
-
-  var contributionText = contribution < 0
-    ? '-' + fmt(Math.abs(contribution)) + '억'
-    : '약 ' + fmt(contribution) + '억';
-
-  var contributionCalcText = contribution < 0
-    ? '-' + fmt(Math.abs(contribution)) + '억'
-    : fmt(contribution) + '억';
-
-  document.getElementById('resultTitle').textContent =
-    selectedOwner + '평 보유 → ' + selectedTarget + '평 선택';
-
-  document.getElementById('resultMeta').textContent =
-    '대지지분 약 ' + fmt(d.share) +
-    '평 · 제로500 단순 사업면적 약 ' + fmt(d.area) + '평';
-
-  document.getElementById('landChip').textContent = '토지 ' + fmt(d.land) + '억 고정';
-  document.getElementById('contribution').textContent = contributionText;
-  document.getElementById('buildingResult').textContent = fmt(building) + '억';
-  document.getElementById('totalInput').textContent = fmt(totalInput) + '억';
-  document.getElementById('assetValue').textContent = fmt(assetValue) + '억';
-  document.getElementById('roiValue').textContent =
-    building > 0 ? ((roi >= 0 ? '+' : '') + Math.round(roi) + '%') : '0%';
-
-  document.getElementById('calcLine').innerHTML =
-    '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
-    '억</b> + 분담금 <b>' + contributionCalcText +
-    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
-}
-
-window.addEventListener('load', function(){
-  recalc();
-});
+})();
 </script>
 </body>
 </html>
