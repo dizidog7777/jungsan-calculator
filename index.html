@@ -39,6 +39,7 @@ button{-webkit-appearance:none;appearance:none}
 .btn-grid{display:grid;gap:5px;min-width:0}
 .btn-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .btn-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.btn-grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}
 .btn-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .choice-btn{min-width:0;min-height:40px;padding:5px 4px;border:1px solid #c7d0dc;border-radius:10px;background:#fff;color:#344054;font-size:15px;font-weight:950;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .choice-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
@@ -57,7 +58,7 @@ button{-webkit-appearance:none;appearance:none}
 .primary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:5px;padding:9px 10px;border:1px solid #c8d8fb;border-radius:11px;background:#edf4ff}
 .primary span{font-size:14px;font-weight:900;color:#4c659d}
 .primary strong{font-size:28px;line-height:1;color:var(--blue);letter-spacing:-.055em}
-.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:5px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:5px}
 .metric{min-width:0;padding:7px 5px;border:1px solid #edf0f4;border-radius:8px;background:#f8fafc}
 .metric span{display:block;font-size:11px;line-height:1.1;color:#7c8797}
 .metric strong{display:block;margin-top:2px;font-size:16px;line-height:1.05;font-weight:950;letter-spacing:-.035em;white-space:nowrap}
@@ -111,7 +112,7 @@ button{-webkit-appearance:none;appearance:none}
   <header class="hero">
     <div class="mini">중산시범 · 제로500 전략 가정 시나리오</div>
     <h1>제로500 사업구조 단순 시뮬레이션</h1>
-    <p>보유평형·희망평형·건물 매입가를 기준으로 제로500 가정 시 사업면적, 단순 분담금, 총투입액과 단순 ROI 구조를 비교합니다.</p>
+    <p>보유평형·희망평형·건물 매입가를 기준으로 제로500 가정 시 사업면적, 단순 분담금, 총투입액과 신축 예상가치를 비교합니다.</p>
   </header>
 
   <div class="body">
@@ -126,7 +127,8 @@ button{-webkit-appearance:none;appearance:none}
 
     <div class="group">
       <div class="group-title">희망 평형</div>
-      <div class="btn-grid four" id="targetButtons">
+      <div class="btn-grid five" id="targetButtons">
+        <button type="button" class="choice-btn" data-target="40">40평</button>
         <button type="button" class="choice-btn active" data-target="34">34평</button>
         <button type="button" class="choice-btn" data-target="30">30평</button>
         <button type="button" class="choice-btn" data-target="25">25평</button>
@@ -178,16 +180,12 @@ button{-webkit-appearance:none;appearance:none}
           <span>신축 자산</span>
           <strong id="assetValue">68억</strong>
         </div>
-        <div class="metric">
-          <span>단순 ROI</span>
-          <strong class="blue" id="roiValue">0%</strong>
-        </div>
+
       </div>
 
       <div class="calc-line" id="calcLine">
         건물 <b>0억</b> + 토지 <b>7억</b> + 분담금 <b>4억</b> = 총투입 <b>11억</b>
       </div>
-      <div class="roi-note">※ 단순 ROI는 제로500 사업 자체의 수익률이 아니라, 개인이 입력한 건물 취득가와 토지대금·분담금을 포함한 <strong>개인 총투입 기준의 단순 경제가치 비교지표</strong>입니다.</div>
       <div class="first-note">↓ 시뮬레이션의 배경과 계산 전제는 아래 참고</div>
     </section>
   </div>
@@ -226,7 +224,7 @@ button{-webkit-appearance:none;appearance:none}
     </p>
     <p>
       사업밀도가 500% 수준까지 높아지면 작은 대지지분 차이도 더 큰 사업면적 차이로 확대됩니다.
-      따라서 같은 34평·30평·25평·20평을 선택하더라도 18평·15평·12평 소유자의 단순 예상 부담은 서로 달라질 수 있습니다.
+      따라서 같은 40평·34평·30평·25평·20평을 선택하더라도 18평·15평·12평 소유자의 단순 예상 부담은 서로 달라질 수 있습니다.
       이 계산기는 그 구조를 지금 단계에서 직관적으로 이해하기 위한 도구입니다.
     </p>
     <div class="explain-link">
@@ -241,7 +239,7 @@ button{-webkit-appearance:none;appearance:none}
     <p><strong>1. 보유평형별 대지지분:</strong> 18평 약 7.9평, 15평 약 6.4평, 12평 약 5.2평을 사용합니다.</p>
     <p><strong>2. 제로500 적용값:</strong> 실질 사업밀도는 심의 결과에 따라 약 450~500% 범위를 예상하는 전략 시나리오이며, 이 계산기에서는 사업성 상단을 확인하기 위해 500%를 적용합니다. 500%는 확정 용적률이 아닙니다.</p>
     <p><strong>3. 단순 사업면적:</strong> 500%를 단순 적용해 18평 약 40평, 15평 약 32평, 12평 약 26평으로 환산합니다.</p>
-    <p><strong>4. 희망평형:</strong> 34·30·25·20평은 현재 지분비례와 상품성을 감안한 단순 참고안입니다. 이 시뮬레이션에서 말하는 ‘34평형’ 등은 전용면적 자체가 아니라 통상적인 공급면적 기준의 평형 개념으로, 주거공용면적 등이 포함된 비교단위로 사용합니다. 따라서 단순 사업면적에서 별도의 효율계수를 다시 차감하지 않습니다. 실제 평형구성과 배정기준은 추후 조합원 선호도 조사, 정비계획, 설계 및 사업성 검토 등을 거쳐 결정됩니다.</p>
+    <p><strong>4. 희망평형:</strong> 40·34·30·25·20평은 제로500 사업구조를 비교하기 위한 단순 참고 선택지입니다. 이 시뮬레이션에서 말하는 ‘34평형’ 등은 전용면적 자체가 아니라 통상적인 공급면적 기준의 평형 개념으로, 주거공용면적 등이 포함된 비교단위로 사용합니다. 따라서 단순 사업면적에서 별도의 효율계수를 다시 차감하지 않습니다. <strong>실제 조합원 분양신청 가능평형과 배정순위는 향후 감정평가에 따른 권리가액, 조합 정관, 관리처분계획 및 조합원 분양기준 등에 따라 달라질 수 있습니다.</strong></p>
     <p><strong>5. 토지대금:</strong> 18평 7억, 15평 6억, 12평 5억을 단순 고정값으로 사용합니다. 시·구유지 매입원가와 이자 등을 단순화한 참고치이며 선납·일시납·분납 조건 등에 따라 실제 금액은 달라질 수 있습니다.</p>
     <p><strong>6. 건물 매입원가:</strong> 개인별 차이가 크므로 직접 입력합니다. 기본값은 0억원이며, 입력한 금액은 총투입액과 단순 ROI에 반영됩니다. 분담금 자체는 건물 취득가와 별개입니다.</p>
     <p><strong>7. 총사업비:</strong> 사업면적 1평당 0.4억원의 단순 예상값을 사용합니다. 실제 공사비·금융비·물가·사업조건에 따라 달라질 수 있습니다.</p>
@@ -249,12 +247,12 @@ button{-webkit-appearance:none;appearance:none}
     <p><strong>9. 완공 후 신축가치:</strong> 비교를 위해 2억원/평을 단순 적용합니다. 실제 완공시점 시장가치는 평형, 조망, 동·호수, 상품성, 시장상황 등에 따라 달라질 수 있습니다.</p>
     <p><strong>10. 지분비례 면적 초과:</strong> 자신의 단순 지분비례 사업면적보다 큰 평형을 선택하면 부족면적을 선택한 일반분양가와 같은 평당가로 추가배정받는다고 단순 가정합니다. 실제 추가분담금 산식과는 다를 수 있습니다.</p>
     <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>
-    <p><strong>12. 단순 ROI:</strong> 건물 매입가가 0억원인 기본 상태에서는 0%로 표시하고, 본인의 실제 건물 매입가를 입력하면 계산합니다. <strong>단순 ROI는 신축 예상가치와 가정 환급금까지 모두 회수자산으로 간주한 총 경제가치 대비 투자수익률</strong>입니다. 분담금이 양(+)이면 실제 투입액을 <strong>건물 매입가 + 토지대금 + 분담금</strong>으로 보고 신축 예상가치를 회수가치로 계산합니다. 분담금이 음(-)이면 실제 투입액은 <strong>건물 매입가 + 토지대금</strong>으로 보고, 음(-)의 분담금 절대값을 <strong>단순 ROI 예측모델상의 가정 환급금</strong>으로 회수가치에 더해 계산합니다. 일반분양가 가정과 신축가치 가정이 모두 2억원/평인 경우에는 평형을 줄인 만큼 신축가치는 감소하지만 가정 환급금이 같은 금액만큼 증가하므로 여러 선택 평형의 단순 ROI가 동일하게 표시될 수 있습니다. 환급금의 지급시점이나 재투자수익 등 시간가치와 기회비용은 반영하지 않습니다. 실제 현금 환급이 확정된다는 의미도 아니며 확정 수익률도 아닙니다.</p>
-    <p><strong>13. 감정평가 전 단순 지분비례:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 평형별 사업면적과 분담금 구조를 단순 추정합니다. 실제 감정평가에서는 대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다. 정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 확정치가 아닌 단순 참고치입니다.</p>
+    
+    <p><strong>12. 감정평가 전 단순 지분비례:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 평형별 사업면적과 분담금 구조를 단순 추정합니다. 실제 감정평가에서는 대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다. 정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 확정치가 아닌 단순 참고치입니다.</p>
   </section>
 
   <div class="footer">
-    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R8</strong>
+    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R9</strong>
   </div>
 </main>
 </div>
@@ -314,27 +312,11 @@ button{-webkit-appearance:none;appearance:none}
 
     var assetValue = selectedTarget * 2.0;
 
-    // 단순 ROI 예측모델
-    // 양(+)의 분담금: 실제 투입액 = 건물 + 토지 + 분담금
-    // 음(-)의 분담금: 실제 투입액 = 건물 + 토지,
-    //                  음(-)의 분담금 절대값은 '가정 환급금'으로 회수가치에 더함
-    var roiInvested = 0;
-    var roiRecovered = 0;
+    // 주민 참고용 총투입 구조:
+    // 양(+)의 분담금은 추가투입으로 포함하고,
+    // 음(-)의 분담금은 확정 환급이 아니므로 총투입에서 차감하지 않고 '가정환급'으로 별도 표시
     var assumedRefund = contribution < 0 ? Math.abs(contribution) : 0;
-    var roi = 0;
-
-    if (contribution >= 0){
-      roiInvested = building + d.land + contribution;
-      roiRecovered = assetValue;
-    } else {
-      roiInvested = building + d.land;
-      roiRecovered = assetValue + assumedRefund;
-    }
-
-    // 사용자가 건물 매입가를 입력하기 전에는 요청대로 0% 표시
-    if (building > 0 && roiInvested > 0){
-      roi = ((roiRecovered - roiInvested) / roiInvested) * 100;
-    }
+    var displayTotalInput = building + d.land + Math.max(contribution, 0);
 
     var contributionText = contribution < 0
       ? '-' + fmt(Math.abs(contribution)) + '억'
@@ -354,21 +336,18 @@ button{-webkit-appearance:none;appearance:none}
     byId('landChip').textContent = '토지 ' + fmt(d.land) + '억 고정';
     byId('contribution').textContent = contributionText;
     byId('buildingResult').textContent = fmt(building) + '억';
-    byId('totalInput').textContent = fmt(roiInvested) + '억';
+    byId('totalInput').textContent = fmt(displayTotalInput) + '억';
     byId('assetValue').textContent = fmt(assetValue) + '억';
-    byId('roiValue').textContent =
-      building > 0 ? ((roi >= 0 ? '+' : '') + Math.round(roi) + '%') : '0%';
-
     // 네이비 박스는 ROI 계산의 실제 투입액 기준과 일치시킴
     if (contribution >= 0){
       byId('calcLine').innerHTML =
         '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
         '억</b> + 분담금 <b>' + contributionCalcText +
-        '</b> = 총투입 <b>' + fmt(roiInvested) + '억</b>';
+        '</b> = 총투입 <b>' + fmt(displayTotalInput) + '억</b>';
     } else {
       byId('calcLine').innerHTML =
         '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
-        '억</b> + 추가분담 <b>0억</b> = 총투입 <b>' + fmt(roiInvested) +
+        '억</b> + 추가분담 <b>0억</b> = 총투입 <b>' + fmt(displayTotalInput) +
         '억</b> · 가정환급 <b>' + fmt(assumedRefund) + '억</b>';
     }
   }
