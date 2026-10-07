@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>중산시범 · 제로500 사업구조 단순 시뮬레이션</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --ink:#0f172a;
+  --blue:#2457d6;
+  --muted:#64748b;
+  --line:#d8e0ea;
+  --soft:#f7f9fc;
+  --navy:#111827;
+  --cream:#fffaf0;
+}
+html,body{margin:0;padding:0;background:#fff;color:var(--ink)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+button,input{font:inherit}
+button{-webkit-appearance:none;appearance:none}
+.wrap{width:100%;max-width:620px;margin:0 auto;padding:0}
+.app{width:100%;background:#fff}
+.hero{margin:0;padding:9px 12px 8px;background:var(--navy);color:#fff}
+.hero .mini{font-size:13px;font-weight:900;color:#bfc8d6}
+.hero h1{margin:3px 0 3px;font-size:27px;line-height:1.05;letter-spacing:-.05em}
+.hero p{margin:0;font-size:14px;line-height:1.28;color:#d7deea}
+.body{padding:7px 9px 9px}
+.group{display:grid;grid-template-columns:82px minmax(0,1fr);gap:7px;align-items:center;margin-top:5px}
+.group:first-child{margin-top:0}
+.group-title{font-size:15px;line-height:1.1;font-weight:950;letter-spacing:-.025em}
+.btn-grid{display:grid;gap:5px;min-width:0}
+.btn-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.btn-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.btn-grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}
+.btn-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.choice-btn{min-width:0;min-height:40px;padding:5px 4px;border:1px solid #c7d0dc;border-radius:10px;background:#fff;color:#344054;font-size:15px;font-weight:950;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.choice-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.choice-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.scenario-btn{min-height:39px;font-size:15px}
+.input-shell{display:flex;align-items:center;gap:7px;min-height:40px;padding:4px 7px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+.input-shell input{width:116px;min-width:0;border:1px solid #c4ceda;border-radius:8px;background:#fff;padding:7px 9px;color:#111827;font-size:19px;font-weight:950;outline:none}
+.input-shell input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(36,87,214,.12)}
+.unit{font-size:15px;font-weight:900;color:#526070}
+.input-help{margin-left:auto;font-size:12px;font-weight:800;color:#7b8798;white-space:nowrap}
+.result{margin-top:7px;padding-top:7px;border-top:1px solid #e3e8ef}
+.result-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.result-title{font-size:20px;line-height:1.05;font-weight:950;letter-spacing:-.045em}
+.result-meta{margin-top:2px;font-size:12px;line-height:1.25;color:#718096}
+.land-chip{flex:0 0 auto;padding:4px 7px;border-radius:999px;background:#f0f3f7;color:#475467;font-size:12px;font-weight:900;white-space:nowrap}
+.primary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:5px;padding:9px 10px;border:1px solid #c8d8fb;border-radius:11px;background:#edf4ff}
+.primary span{font-size:14px;font-weight:900;color:#4c659d}
+.primary strong{font-size:28px;line-height:1;color:var(--blue);letter-spacing:-.055em}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:5px}
+.metric{min-width:0;padding:7px 5px;border:1px solid #edf0f4;border-radius:8px;background:#f8fafc}
+.metric span{display:block;font-size:11px;line-height:1.1;color:#7c8797}
+.metric strong{display:block;margin-top:2px;font-size:16px;line-height:1.05;font-weight:950;letter-spacing:-.035em;white-space:nowrap}
+.metric strong.blue{color:var(--blue)}
+.calc-line{margin-top:7px;padding:12px 10px;border-radius:11px;background:var(--navy);color:#d9e0ea;font-size:17px;line-height:1.45;font-weight:850;letter-spacing:-.025em;text-align:center}
+.calc-line b{color:#fff;font-size:20px;font-weight:950;letter-spacing:-.035em}
+.roi-note{margin-top:7px;padding:8px 9px;border-radius:9px;background:#f3f6fb;color:#526070;font-size:13.5px;line-height:1.5;text-align:left}
+.roi-note strong{color:#1f2937}
+.first-note{margin-top:6px;text-align:center;font-size:12.5px;color:#7f8a9a;font-weight:800}
+.background{margin:12px 9px 0;padding:14px;border-radius:15px;border:1px solid #dce4ef;background:#f8fafc}
+.background .kicker{display:inline-block;padding:4px 7px;border-radius:999px;background:#e8eef9;color:#3c5b99;font-size:12.5px;font-weight:900}
+.background h2{margin:7px 0 7px;font-size:19px;letter-spacing:-.035em}
+.background p{margin:8px 0 0;font-size:14.5px;line-height:1.68;color:#526070}
+.background strong{color:#1f2937}
+.zero500-box{margin-top:9px;padding:11px;border:2px solid #2457d6;border-radius:13px;background:#fff}
+.zero500-row{display:grid;grid-template-columns:90px minmax(0,1fr);gap:9px;align-items:start;padding:8px 0;border-bottom:1px solid #e6ebf2}
+.zero500-row:first-child{padding-top:0}
+.zero500-row strong{font-size:14.5px;color:#2457d6}
+.zero500-row span{font-size:14.5px;line-height:1.62;color:#344054}
+.zero500-warning{margin-top:9px;padding:10px 11px;border-radius:10px;background:#fff4e5;color:#69420e;font-size:14.5px;line-height:1.65;font-weight:700}
+.explain-link{margin-top:10px;padding:11px 12px;border-radius:11px;background:#111827;color:#eef2f7;font-size:14.5px;line-height:1.62}
+.explain-link strong{color:#fff}
+.assumptions{margin:12px 9px 14px;padding:14px;border:1px solid #f0ddb0;border-radius:15px;background:var(--cream)}
+.assumptions h2{margin:0 0 7px;font-size:20px}
+.assumptions p{margin:9px 0 0;font-size:14.5px;line-height:1.66;color:#66583b}
+.assumptions strong{color:#413720}
+.footer{padding:0 12px 17px;font-size:13.5px;line-height:1.6;color:#7f8a9a}
+@media(max-width:390px){
+  .hero{padding:8px 10px 7px}
+  .hero h1{font-size:25px}
+  .hero p{font-size:13.5px}
+  .body{padding:6px 7px 8px}
+  .group{grid-template-columns:75px minmax(0,1fr);gap:6px;margin-top:4px}
+  .group-title{font-size:14.5px}
+  .choice-btn{min-height:38px;padding:5px 3px;font-size:14.5px}
+  .scenario-btn{font-size:14.5px}
+  .input-shell{min-height:38px}
+  .input-shell input{width:104px;padding:6px 8px;font-size:18px}
+  .result{margin-top:6px;padding-top:6px}
+  .result-title{font-size:19px}
+  .primary{padding:8px 9px}
+  .primary strong{font-size:26px}
+  .metric{padding:6px 4px}
+  .metric strong{font-size:15.5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<main class="app" id="calcApp">
+  <header class="hero">
+    <div class="mini">중산시범 · 제로500 전략 가정 시나리오</div>
+    <h1>제로500 사업구조 단순 시뮬레이션</h1>
+    <p>보유평형·희망평형·건물 매입가를 기준으로 제로500 가정 시 사업면적, 단순 분담금, 총투입액과 신축 예상가치를 비교합니다.</p>
+  </header>
+
+  <div class="body">
+    <div class="group">
+      <div class="group-title">보유 평형</div>
+      <div class="btn-grid three" id="ownerButtons">
+        <button type="button" class="choice-btn active" data-owner="18">18평</button>
+        <button type="button" class="choice-btn" data-owner="15">15평</button>
+        <button type="button" class="choice-btn" data-owner="12">12평</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-title">희망 평형</div>
+      <div class="btn-grid five" id="targetButtons">
+        <button type="button" class="choice-btn" data-target="40">40평</button>
+        <button type="button" class="choice-btn active" data-target="34">34평</button>
+        <button type="button" class="choice-btn" data-target="30">30평</button>
+        <button type="button" class="choice-btn" data-target="25">25평</button>
+        <button type="button" class="choice-btn" data-target="20">20평</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <label class="group-title" for="buildingInput">건물 매입가</label>
+      <div class="input-shell">
+        <input id="buildingInput" type="number" inputmode="decimal" min="0" max="999" step="0.1" value="0" placeholder="0">
+        <span class="unit">억원</span>
+        <span class="input-help">본인 매입가 입력</span>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-title">분양가 가정</div>
+      <div class="btn-grid two" id="saleButtons">
+        <button type="button" class="choice-btn scenario-btn active" data-sale="2">2.0억/평</button>
+        <button type="button" class="choice-btn scenario-btn" data-sale="1.5">1.5억/평</button>
+      </div>
+    </div>
+
+    <section class="result" aria-live="polite">
+      <div class="result-head">
+        <div>
+          <div class="result-title" id="resultTitle">18평 보유 → 34평 선택</div>
+          <div class="result-meta" id="resultMeta">대지지분 약 7.9평 · 제로500 단순 사업면적 약 40평</div>
+        </div>
+        <div class="land-chip" id="landChip">토지 7억 고정</div>
+      </div>
+
+      <div class="primary">
+        <span>예상 단순 분담금</span>
+        <strong id="contribution">약 4억</strong>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <span>건물 매입가</span>
+          <strong id="buildingResult">0억</strong>
+        </div>
+        <div class="metric">
+          <span>총투입액</span>
+          <strong id="totalInput">11억</strong>
+        </div>
+        <div class="metric">
+          <span>신축 자산</span>
+          <strong id="assetValue">68억</strong>
+        </div>
+
+      </div>
+
+      <div class="calc-line" id="calcLine">
+        건물 <b>0억</b> + 토지 <b>7억</b> + 분담금 <b>4억</b> = 총투입 <b>11억</b>
+      </div>
+      <div class="first-note">↓ 시뮬레이션의 배경과 계산 전제는 아래 참고</div>
+    </section>
+  </div>
+
+  <section class="background">
+    <span class="kicker">제로500 전략 가정 시나리오</span>
+    <h2>이 시뮬레이션은 확정 분담금을 산출하는 계산기가 아니라, 제로500이 실현될 경우의 사업구조를 비교해보는 전략 참고자료입니다.</h2>
+
+    <div class="zero500-box">
+      <div class="zero500-row">
+        <strong>ZERO의 의미</strong>
+        <span>이 계산기에서는 <b>순부담·기부채납 0 + 공공주택 환수 0</b>을 목표로 두는 전략 가정을 뜻합니다.</span>
+      </div>
+      <div class="zero500-row">
+        <strong>500의 의미</strong>
+        <span>심의 결과에 따른 실질 사업밀도를 <b>약 450~500%</b> 범위로 보고, 이 계산기에서는 그중 <b>상단값 500%</b>를 적용했습니다.</span>
+      </div>
+      <div class="zero500-warning">
+        450~500%는 정비계획과 심의 결과를 전제로 한 전략상 예상 범위이며, 이 시뮬레이션에서는 사업구조의 상단 가능성을 보기 위해 500%를 적용합니다. 500%는 확정 용적률이 아니며 실제 용적률과 공공기여 조건은 향후 정비계획 및 심의 결과에 따라 달라질 수 있습니다.
+      </div>
+    </div>
+
+    <p>
+      실제 재건축 분담금은 향후 <strong>종전자산 감정평가 → 비례율 → 권리가액 → 조합원 분양가</strong>를 거쳐 계산됩니다.
+      현재는 감정평가 전 단계이므로, 이 계산기에서는 <strong>현재 대지지분의 상대적 차이를 기준으로 단순 지분비례</strong>하여
+      평형별 사업면적과 예상 분담금 구조를 비교합니다.
+    </p>
+    <div class="zero500-warning">
+      <strong>감정평가 전 단순 가정:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 단순 지분비례하여 계산합니다.
+      실제 감정평가에서는 <strong>대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영</strong>되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다.
+      정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 <strong>확정치가 아닌 단순 참고치</strong>로 보셔야 합니다.
+    </div>
+    <p>
+      중산은 대지가 작고 세대수가 많으며 시·구유지 매입 부담까지 있어, 일반적인 정비계획 수준만으로는 조합원에게 돌아갈 사업면적과 일반분양 재원이 부족할 가능성이 큽니다.
+      그래서 제로500은 <strong>정비계획 단계에서 사업 체급을 최대한 확보하고, 공공기여와 공공주택 환수로 빠져나가는 면적을 최소화해 조합원이 활용할 수 있는 사업면적을 최대화</strong>해보자는 전략입니다.
+    </p>
+    <p>
+      사업밀도가 500% 수준까지 높아지면 작은 대지지분 차이도 더 큰 사업면적 차이로 확대됩니다.
+      따라서 같은 40평·34평·30평·25평·20평을 선택하더라도 18평·15평·12평 소유자의 단순 예상 부담은 서로 달라질 수 있습니다.
+      이 계산기는 그 구조를 지금 단계에서 직관적으로 이해하기 위한 도구입니다.
+    </p>
+    <div class="explain-link">
+      <strong>더 자세한 근거가 궁금하시면</strong><br>
+      함께 올린 <strong>「기존안 vs 제로500 사업성 현실비교」 설명자료</strong>를 참고해 주세요.
+      기존안의 실질 사업체급, 제로500 전략의 배경, 일반분양 재원, 분담금 구조와 가격 가정을 더 자세히 설명하고 있습니다.
+    </div>
+  </section>
+
+  <section class="assumptions">
+    <h2>계산에 사용한 전제</h2>
+    <p><strong>1. 보유평형별 대지지분:</strong> 18평 약 7.9평, 15평 약 6.4평, 12평 약 5.2평을 사용합니다.</p>
+    <p><strong>2. 제로500 적용값:</strong> 실질 사업밀도는 심의 결과에 따라 약 450~500% 범위를 예상하는 전략 시나리오이며, 이 계산기에서는 사업성 상단을 확인하기 위해 500%를 적용합니다. 500%는 확정 용적률이 아닙니다.</p>
+    <p><strong>3. 단순 사업면적:</strong> 500%를 단순 적용해 18평 약 40평, 15평 약 32평, 12평 약 26평으로 환산합니다.</p>
+    <p><strong>4. 희망평형:</strong> 40·34·30·25·20평은 제로500 사업구조를 비교하기 위한 단순 참고 선택지입니다. 이 시뮬레이션에서 말하는 ‘34평형’ 등은 전용면적 자체가 아니라 통상적인 공급면적 기준의 평형 개념으로, 주거공용면적 등이 포함된 비교단위로 사용합니다. 따라서 단순 사업면적에서 별도의 효율계수를 다시 차감하지 않습니다. <strong>실제 조합원 분양신청 가능평형과 배정순위는 향후 감정평가에 따른 권리가액, 조합 정관, 관리처분계획 및 조합원 분양기준 등에 따라 달라질 수 있습니다.</strong></p>
+    <p><strong>5. 토지대금:</strong> 18평 7억, 15평 6억, 12평 5억을 단순 고정값으로 사용합니다. 시·구유지 매입원가와 이자 등을 단순화한 참고치이며 선납·일시납·분납 조건 등에 따라 실제 금액은 달라질 수 있습니다.</p>
+    <p><strong>6. 건물 매입원가:</strong> 개인별 차이가 크므로 직접 입력합니다. 기본값은 0억원이며, 입력한 금액은 총투입액과 단순 ROI에 반영됩니다. 분담금 자체는 건물 취득가와 별개입니다.</p>
+    <p><strong>7. 총사업비:</strong> 사업면적 1평당 0.4억원의 단순 예상값을 사용합니다. 실제 공사비·금융비·물가·사업조건에 따라 달라질 수 있습니다.</p>
+    <p><strong>8. 일반분양가:</strong> 기본 시나리오 2억원/평, 보수 시나리오 1.5억원/평을 선택해 비교합니다.</p>
+    <p><strong>9. 완공 후 신축가치:</strong> 비교를 위해 2억원/평을 단순 적용합니다. 실제 완공시점 시장가치는 평형, 조망, 동·호수, 상품성, 시장상황 등에 따라 달라질 수 있습니다.</p>
+    <p><strong>10. 지분비례 면적 초과:</strong> 자신의 단순 지분비례 사업면적보다 큰 평형을 선택하면 부족면적을 선택한 일반분양가와 같은 평당가로 추가배정받는다고 단순 가정합니다. 실제 추가분담금 산식과는 다를 수 있습니다.</p>
+    <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>
+    
+    <p><strong>12. 감정평가 전 단순 지분비례:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 평형별 사업면적과 분담금 구조를 단순 추정합니다. 실제 감정평가에서는 대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다. 정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 확정치가 아닌 단순 참고치입니다.</p>
+  </section>
+
+  <div class="footer">
+    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R9</strong>
+  </div>
+</main>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var OWNER_DATA = {
+    18:{share:7.9, area:40, land:7},
+    15:{share:6.4, area:32, land:6},
+    12:{share:5.2, area:26, land:5}
+  };
+
+  var selectedOwner = 18;
+  var selectedTarget = 34;
+  var selectedSale = 2.0;
+
+  function byId(id){
+    return document.getElementById(id);
+  }
+
+  function fmt(n){
+    n = Math.round(Number(n) * 10) / 10;
+    return Math.abs(n - Math.round(n)) < 0.000001 ? String(Math.round(n)) : n.toFixed(1);
+  }
+
+  function readBuilding(){
+    var input = byId('buildingInput');
+    var n = parseFloat(input.value);
+    if (!isFinite(n) || n < 0) return 0;
+    if (n > 999) n = 999;
+    return n;
+  }
+
+  function setActive(containerId, targetButton){
+    var buttons = document.querySelectorAll('#' + containerId + ' .choice-btn');
+    for (var i = 0; i < buttons.length; i++){
+      buttons[i].classList.toggle('active', buttons[i] === targetButton);
+    }
+  }
+
+  function recalc(){
+    var d = OWNER_DATA[selectedOwner];
+    var building = readBuilding();
+
+    // 사업비 = 단순 사업면적 × 0.4억/평
+    var totalCost = d.area * 0.4;
+    var balanceArea = d.area - selectedTarget;
+    var contribution;
+
+    if (balanceArea >= 0){
+      contribution = totalCost - (balanceArea * selectedSale);
+    } else {
+      contribution = totalCost + (Math.abs(balanceArea) * selectedSale);
+    }
+
+    var assetValue = selectedTarget * 2.0;
+
+    // 주민 참고용 총투입 구조:
+    // 양(+)의 분담금은 추가투입으로 포함하고,
+    // 음(-)의 분담금은 확정 환급이 아니므로 총투입에서 차감하지 않고 '가정환급'으로 별도 표시
+    var assumedRefund = contribution < 0 ? Math.abs(contribution) : 0;
+    var displayTotalInput = building + d.land + Math.max(contribution, 0);
+
+    var contributionText = contribution < 0
+      ? '-' + fmt(Math.abs(contribution)) + '억'
+      : '약 ' + fmt(contribution) + '억';
+
+    var contributionCalcText = contribution < 0
+      ? '-' + fmt(Math.abs(contribution)) + '억'
+      : fmt(contribution) + '억';
+
+    byId('resultTitle').textContent =
+      selectedOwner + '평 보유 → ' + selectedTarget + '평 선택';
+
+    byId('resultMeta').textContent =
+      '대지지분 약 ' + fmt(d.share) +
+      '평 · 제로500 단순 사업면적 약 ' + fmt(d.area) + '평';
+
+    byId('landChip').textContent = '토지 ' + fmt(d.land) + '억 고정';
+    byId('contribution').textContent = contributionText;
+    byId('buildingResult').textContent = fmt(building) + '억';
+    byId('totalInput').textContent = fmt(displayTotalInput) + '억';
+    byId('assetValue').textContent = fmt(assetValue) + '억';
+    // 네이비 박스는 ROI 계산의 실제 투입액 기준과 일치시킴
+    if (contribution >= 0){
+      byId('calcLine').innerHTML =
+        '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
+        '억</b> + 분담금 <b>' + contributionCalcText +
+        '</b> = 총투입 <b>' + fmt(displayTotalInput) + '억</b>';
+    } else {
+      byId('calcLine').innerHTML =
+        '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
+        '억</b> + 추가분담 <b>0억</b> = 총투입 <b>' + fmt(displayTotalInput) +
+        '억</b> · 가정환급 <b>' + fmt(assumedRefund) + '억</b>';
+    }
+  }
+
+  function init(){
+    var ownerButtons = document.querySelectorAll('#ownerButtons .choice-btn');
+    for (var i = 0; i < ownerButtons.length; i++){
+      ownerButtons[i].addEventListener('click', function(){
+        selectedOwner = Number(this.getAttribute('data-owner'));
+        setActive('ownerButtons', this);
+        recalc();
+      });
+    }
+
+    var targetButtons = document.querySelectorAll('#targetButtons .choice-btn');
+    for (var j = 0; j < targetButtons.length; j++){
+      targetButtons[j].addEventListener('click', function(){
+        selectedTarget = Number(this.getAttribute('data-target'));
+        setActive('targetButtons', this);
+        recalc();
+      });
+    }
+
+    var saleButtons = document.querySelectorAll('#saleButtons .choice-btn');
+    for (var k = 0; k < saleButtons.length; k++){
+      saleButtons[k].addEventListener('click', function(){
+        selectedSale = Number(this.getAttribute('data-sale'));
+        setActive('saleButtons', this);
+        recalc();
+      });
+    }
+
+    var buildingInput = byId('buildingInput');
+    buildingInput.addEventListener('input', recalc);
+    buildingInput.addEventListener('change', recalc);
+    buildingInput.addEventListener('keyup', recalc);
+
+    recalc();
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
