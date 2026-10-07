@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>중산시범 · 제로500 전략 가정 시나리오 · 희망 평형 예상 분담금 미니 계산기</title>
+<title>중산시범 · 제로500 사업구조 단순 시뮬레이션</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -64,7 +64,9 @@ button{-webkit-appearance:none;appearance:none}
 .metric strong.blue{color:var(--blue)}
 .calc-line{margin-top:7px;padding:12px 10px;border-radius:11px;background:var(--navy);color:#d9e0ea;font-size:17px;line-height:1.45;font-weight:850;letter-spacing:-.025em;text-align:center}
 .calc-line b{color:#fff;font-size:20px;font-weight:950;letter-spacing:-.035em}
-.first-note{margin-top:5px;text-align:center;font-size:11px;color:#94a3b8;font-weight:800}
+.roi-note{margin-top:7px;padding:8px 9px;border-radius:9px;background:#f3f6fb;color:#526070;font-size:13.5px;line-height:1.5;text-align:left}
+.roi-note strong{color:#1f2937}
+.first-note{margin-top:6px;text-align:center;font-size:12.5px;color:#7f8a9a;font-weight:800}
 .background{margin:12px 9px 0;padding:14px;border-radius:15px;border:1px solid #dce4ef;background:#f8fafc}
 .background .kicker{display:inline-block;padding:4px 7px;border-radius:999px;background:#e8eef9;color:#3c5b99;font-size:12.5px;font-weight:900}
 .background h2{margin:7px 0 7px;font-size:19px;letter-spacing:-.035em}
@@ -79,7 +81,7 @@ button{-webkit-appearance:none;appearance:none}
 .explain-link{margin-top:10px;padding:11px 12px;border-radius:11px;background:#111827;color:#eef2f7;font-size:14.5px;line-height:1.62}
 .explain-link strong{color:#fff}
 .assumptions{margin:12px 9px 14px;padding:14px;border:1px solid #f0ddb0;border-radius:15px;background:var(--cream)}
-.assumptions h2{margin:0 0 6px;font-size:18px}
+.assumptions h2{margin:0 0 7px;font-size:20px}
 .assumptions p{margin:9px 0 0;font-size:14.5px;line-height:1.66;color:#66583b}
 .assumptions strong{color:#413720}
 .footer{padding:0 12px 17px;font-size:13.5px;line-height:1.6;color:#7f8a9a}
@@ -108,8 +110,8 @@ button{-webkit-appearance:none;appearance:none}
 <main class="app" id="calcApp">
   <header class="hero">
     <div class="mini">중산시범 · 제로500 전략 가정 시나리오</div>
-    <h1>희망 평형 예상 분담금 미니 계산기</h1>
-    <p>심의 결과 예상 범위 450~500% 중 상단값 500%를 적용한 단순 지분비례 시뮬레이션입니다.</p>
+    <h1>제로500 사업구조 단순 시뮬레이션</h1>
+    <p>보유평형·희망평형·건물 매입가를 기준으로 제로500 가정 시 사업면적, 단순 분담금, 총투입액과 단순 ROI 구조를 비교합니다.</p>
   </header>
 
   <div class="body">
@@ -185,13 +187,14 @@ button{-webkit-appearance:none;appearance:none}
       <div class="calc-line" id="calcLine">
         건물 <b>0억</b> + 토지 <b>7억</b> + 분담금 <b>4억</b> = 총투입 <b>11억</b>
       </div>
-      <div class="first-note">↓ 미니 계산기의 배경과 계산 전제는 아래 참고</div>
+      <div class="roi-note">※ 단순 ROI는 제로500 사업 자체의 수익률이 아니라, 개인이 입력한 건물 취득가와 토지대금·분담금을 포함한 <strong>개인 총투입 기준의 단순 경제가치 비교지표</strong>입니다.</div>
+      <div class="first-note">↓ 시뮬레이션의 배경과 계산 전제는 아래 참고</div>
     </section>
   </div>
 
   <section class="background">
     <span class="kicker">제로500 전략 가정 시나리오</span>
-    <h2>이 계산기는 ‘확정 분담금’이 아니라 제로500이 실현될 경우의 사업구조를 미리 보는 참고자료입니다.</h2>
+    <h2>이 시뮬레이션은 확정 분담금을 산출하는 계산기가 아니라, 제로500이 실현될 경우의 사업구조를 비교해보는 전략 참고자료입니다.</h2>
 
     <div class="zero500-box">
       <div class="zero500-row">
@@ -203,7 +206,7 @@ button{-webkit-appearance:none;appearance:none}
         <span>심의 결과에 따른 실질 사업밀도를 <b>약 450~500%</b> 범위로 보고, 이 계산기에서는 그중 <b>상단값 500%</b>를 적용했습니다.</span>
       </div>
       <div class="zero500-warning">
-        450~500%는 전략상 예상·목표 범위이며 500%가 확정되었다는 뜻이 아닙니다. 실제 용적률과 공공기여 조건은 향후 정비계획 및 심의 결과에 따라 달라질 수 있습니다.
+        450~500%는 정비계획과 심의 결과를 전제로 한 전략상 예상 범위이며, 이 시뮬레이션에서는 사업구조의 상단 가능성을 보기 위해 500%를 적용합니다. 500%는 확정 용적률이 아니며 실제 용적률과 공공기여 조건은 향후 정비계획 및 심의 결과에 따라 달라질 수 있습니다.
       </div>
     </div>
 
@@ -214,10 +217,8 @@ button{-webkit-appearance:none;appearance:none}
     </p>
     <div class="zero500-warning">
       <strong>감정평가 전 단순 가정:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 단순 지분비례하여 계산합니다.
-      실제 감정평가에서는 <strong>대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영</strong>되므로,
-      현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다.
-      정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되므로,
-      현재 계산값은 <strong>확정치가 아닌 단순 참고치</strong>로 보셔야 합니다.
+      실제 감정평가에서는 <strong>대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영</strong>되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다.
+      정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 <strong>확정치가 아닌 단순 참고치</strong>로 보셔야 합니다.
     </div>
     <p>
       중산은 대지가 작고 세대수가 많으며 시·구유지 매입 부담까지 있어, 일반적인 정비계획 수준만으로는 조합원에게 돌아갈 사업면적과 일반분양 재원이 부족할 가능성이 큽니다.
@@ -240,7 +241,7 @@ button{-webkit-appearance:none;appearance:none}
     <p><strong>1. 보유평형별 대지지분:</strong> 18평 약 7.9평, 15평 약 6.4평, 12평 약 5.2평을 사용합니다.</p>
     <p><strong>2. 제로500 적용값:</strong> 실질 사업밀도는 심의 결과에 따라 약 450~500% 범위를 예상하는 전략 시나리오이며, 이 계산기에서는 사업성 상단을 확인하기 위해 500%를 적용합니다. 500%는 확정 용적률이 아닙니다.</p>
     <p><strong>3. 단순 사업면적:</strong> 500%를 단순 적용해 18평 약 40평, 15평 약 32평, 12평 약 26평으로 환산합니다.</p>
-    <p><strong>4. 희망평형:</strong> 34·30·25·20평은 현재 지분비례와 상품성을 감안한 단순 참고안입니다. 실제 평형구성과 배정기준은 추후 조합원 선호도 조사, 정비계획, 사업성 검토 등을 거쳐 최종 결정됩니다.</p>
+    <p><strong>4. 희망평형:</strong> 34·30·25·20평은 현재 지분비례와 상품성을 감안한 단순 참고안입니다. 이 시뮬레이션에서 말하는 ‘34평형’ 등은 전용면적 자체가 아니라 통상적인 공급면적 기준의 평형 개념으로, 주거공용면적 등이 포함된 비교단위로 사용합니다. 따라서 단순 사업면적에서 별도의 효율계수를 다시 차감하지 않습니다. 실제 평형구성과 배정기준은 추후 조합원 선호도 조사, 정비계획, 설계 및 사업성 검토 등을 거쳐 결정됩니다.</p>
     <p><strong>5. 토지대금:</strong> 18평 7억, 15평 6억, 12평 5억을 단순 고정값으로 사용합니다. 시·구유지 매입원가와 이자 등을 단순화한 참고치이며 선납·일시납·분납 조건 등에 따라 실제 금액은 달라질 수 있습니다.</p>
     <p><strong>6. 건물 매입원가:</strong> 개인별 차이가 크므로 직접 입력합니다. 기본값은 0억원이며, 입력한 금액은 총투입액과 단순 ROI에 반영됩니다. 분담금 자체는 건물 취득가와 별개입니다.</p>
     <p><strong>7. 총사업비:</strong> 사업면적 1평당 0.4억원의 단순 예상값을 사용합니다. 실제 공사비·금융비·물가·사업조건에 따라 달라질 수 있습니다.</p>
@@ -248,12 +249,12 @@ button{-webkit-appearance:none;appearance:none}
     <p><strong>9. 완공 후 신축가치:</strong> 비교를 위해 2억원/평을 단순 적용합니다. 실제 완공시점 시장가치는 평형, 조망, 동·호수, 상품성, 시장상황 등에 따라 달라질 수 있습니다.</p>
     <p><strong>10. 지분비례 면적 초과:</strong> 자신의 단순 지분비례 사업면적보다 큰 평형을 선택하면 부족면적을 선택한 일반분양가와 같은 평당가로 추가배정받는다고 단순 가정합니다. 실제 추가분담금 산식과는 다를 수 있습니다.</p>
     <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>
-    <p><strong>12. 단순 ROI:</strong> 건물 매입가가 0억원인 기본 상태에서는 0%로 표시하고, 본인의 실제 건물 매입가를 입력하면 계산합니다. <strong>단순 ROI는 신축 예상가치와 가정 환급금까지 모두 회수자산으로 간주한 총 경제가치 대비 투자수익률</strong>입니다. 분담금이 양(+)이면 실제 투입액을 <strong>건물 매입가 + 토지대금 + 분담금</strong>으로 보고, 신축 예상가치를 회수가치로 계산합니다. 분담금이 음(-)이면 실제 투입액은 <strong>건물 매입가 + 토지대금</strong>으로 보고, 음(-)의 분담금 절대값을 <strong>단순 ROI 예측모델상의 가정 환급금</strong>으로 회수가치에 더해 계산합니다. 특히 일반분양가 가정과 신축가치 가정이 모두 2억원/평인 경우에는, 음(-)의 분담금이 발생하는 구간에서 평형을 줄인 만큼 신축가치는 감소하지만 가정 환급금이 같은 금액만큼 증가하므로 여러 선택 평형의 단순 ROI가 동일하게 표시될 수 있습니다. 실제 현금 환급이 확정된다는 의미는 아니며, 확정 수익률도 아닙니다.</p>
-    <p><strong>13. 감정평가 전 단순 지분비례:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 평형별 사업면적과 분담금 구조를 단순 추정합니다. 실제 감정평가에서는 대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다. 정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 확정치가 아닌 단순 참고치로 봐야 합니다.</p>
+    <p><strong>12. 단순 ROI:</strong> 건물 매입가가 0억원인 기본 상태에서는 0%로 표시하고, 본인의 실제 건물 매입가를 입력하면 계산합니다. <strong>단순 ROI는 신축 예상가치와 가정 환급금까지 모두 회수자산으로 간주한 총 경제가치 대비 투자수익률</strong>입니다. 분담금이 양(+)이면 실제 투입액을 <strong>건물 매입가 + 토지대금 + 분담금</strong>으로 보고 신축 예상가치를 회수가치로 계산합니다. 분담금이 음(-)이면 실제 투입액은 <strong>건물 매입가 + 토지대금</strong>으로 보고, 음(-)의 분담금 절대값을 <strong>단순 ROI 예측모델상의 가정 환급금</strong>으로 회수가치에 더해 계산합니다. 일반분양가 가정과 신축가치 가정이 모두 2억원/평인 경우에는 평형을 줄인 만큼 신축가치는 감소하지만 가정 환급금이 같은 금액만큼 증가하므로 여러 선택 평형의 단순 ROI가 동일하게 표시될 수 있습니다. 환급금의 지급시점이나 재투자수익 등 시간가치와 기회비용은 반영하지 않습니다. 실제 현금 환급이 확정된다는 의미도 아니며 확정 수익률도 아닙니다.</p>
+    <p><strong>13. 감정평가 전 단순 지분비례:</strong> 현재는 종전자산 감정평가 전 단계이므로 대지지분을 기준으로 평형별 사업면적과 분담금 구조를 단순 추정합니다. 실제 감정평가에서는 대지지분과 기존 평형뿐 아니라 여러 개별 평가요인이 함께 반영되므로 현재의 단순 지분비례 결과와 실제 감정가에는 다소 차이가 발생할 수 있습니다. 정확한 권리가액과 분담금은 추후 관리처분 단계에서 확정되며, 현재 계산값은 확정치가 아닌 단순 참고치입니다.</p>
   </section>
 
   <div class="footer">
-    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R7</strong>
+    본 계산기는 주민의 사업구조 이해를 위한 예시형 도구이며, 정비계획·감정평가·비례율·관리처분상의 확정 분담금이나 확정 자산가치를 의미하지 않습니다.<br><strong>계산기 버전 2026.10.07-R8</strong>
   </div>
 </main>
 </div>
