@@ -168,8 +168,8 @@ button{-webkit-appearance:none;appearance:none}
           <strong id="assetValue">68억</strong>
         </div>
         <div class="metric">
-          <span>단순 차이</span>
-          <strong class="blue" id="difference">+57억</strong>
+          <span>단순 ROI</span>
+          <strong class="blue" id="roiValue">0%</strong>
         </div>
       </div>
 
@@ -223,15 +223,17 @@ button{-webkit-appearance:none;appearance:none}
   <section class="assumptions">
     <h2>계산에 사용한 전제</h2>
     <p><strong>1. 보유평형별 대지지분:</strong> 18평 약 7.9평, 15평 약 6.4평, 12평 약 5.2평을 사용합니다.</p>
-    <p><strong>2. 제로500 적용값:</strong> 실질 사업밀도는 심의 결과에 따라 약 450~500% 범위를 예상하는 전략 시나리오이며, 이 계산기에서는 사업성 상단을 확인하기 위해 500%를 적용합니다. 500%는 확정 용적률이 아닙니다.</p>\n    <p><strong>3. 단순 사업면적:</strong> 500%를 단순 적용해 18평 약 40평, 15평 약 32평, 12평 약 26평으로 환산합니다.</p>
+    <p><strong>2. 제로500 적용값:</strong> 실질 사업밀도는 심의 결과에 따라 약 450~500% 범위를 예상하는 전략 시나리오이며, 이 계산기에서는 사업성 상단을 확인하기 위해 500%를 적용합니다. 500%는 확정 용적률이 아닙니다.</p>
+    <p><strong>3. 단순 사업면적:</strong> 500%를 단순 적용해 18평 약 40평, 15평 약 32평, 12평 약 26평으로 환산합니다.</p>
     <p><strong>4. 희망평형:</strong> 34·30·25·20평은 현재 지분비례와 상품성을 감안한 단순 참고안입니다. 실제 평형구성과 배정기준은 추후 조합원 선호도 조사, 정비계획, 사업성 검토 등을 거쳐 최종 결정됩니다.</p>
     <p><strong>5. 토지대금:</strong> 18평 7억, 15평 6억, 12평 5억을 단순 고정값으로 사용합니다. 시·구유지 매입원가와 이자 등을 단순화한 참고치이며 선납·일시납·분납 조건 등에 따라 실제 금액은 달라질 수 있습니다.</p>
-    <p><strong>6. 건물 매입원가:</strong> 개인별 차이가 크므로 직접 입력합니다. 기본값은 0억원이며, 입력한 금액은 총투입액과 투입 대비 단순 차이에 반영됩니다. 분담금 자체는 건물 취득가와 별개입니다.</p>
+    <p><strong>6. 건물 매입원가:</strong> 개인별 차이가 크므로 직접 입력합니다. 기본값은 0억원이며, 입력한 금액은 총투입액과 단순 ROI에 반영됩니다. 분담금 자체는 건물 취득가와 별개입니다.</p>
     <p><strong>7. 총사업비:</strong> 사업면적 1평당 0.4억원의 단순 예상값을 사용합니다. 실제 공사비·금융비·물가·사업조건에 따라 달라질 수 있습니다.</p>
     <p><strong>8. 일반분양가:</strong> 기본 시나리오 2억원/평, 보수 시나리오 1.5억원/평을 선택해 비교합니다.</p>
     <p><strong>9. 완공 후 신축가치:</strong> 비교를 위해 2억원/평을 단순 적용합니다. 실제 완공시점 시장가치는 평형, 조망, 동·호수, 상품성, 시장상황 등에 따라 달라질 수 있습니다.</p>
     <p><strong>10. 지분비례 면적 초과:</strong> 자신의 단순 지분비례 사업면적보다 큰 평형을 선택하면 부족면적을 선택한 일반분양가와 같은 평당가로 추가배정받는다고 단순 가정합니다. 실제 추가분담금 산식과는 다를 수 있습니다.</p>
-    <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>\n    <p><strong>12. 단순 ROI:</strong> (신축 예상가치 - 총투입액) ÷ 총투입액 × 100으로 계산합니다. 다만 건물 매입가가 0억원인 기본 상태에서는 비교 왜곡을 피하기 위해 ROI를 0%로 표시하며, 본인의 실제 건물 매입가를 입력하면 계산됩니다. 확정 수익률을 의미하지 않습니다.</p>
+    <p><strong>11. 음(-)의 분담금:</strong> 계산상 잉여를 뜻하는 단순 환산이며 실제 현금 환급이 확정된다는 의미가 아닙니다.</p>
+    <p><strong>12. 단순 ROI:</strong> (신축 예상가치 - 총투입액) ÷ 총투입액 × 100으로 계산합니다. 다만 건물 매입가가 0억원인 기본 상태에서는 비교 왜곡을 피하기 위해 ROI를 0%로 표시하며, 본인의 실제 건물 매입가를 입력하면 계산됩니다. 확정 수익률을 의미하지 않습니다.</p>
   </section>
 
   <div class="footer">
@@ -307,6 +309,7 @@ function recalc(){
   var totalInput = building + d.land + contribution;
   var assetValue = selectedTarget * 2.0;
   var diff = assetValue - totalInput;
+  var roi = (building > 0 && totalInput !== 0) ? (diff / totalInput) * 100 : 0;
 
   var contributionText = contribution < 0
     ? '-' + fmt(Math.abs(contribution)) + '억'
@@ -328,10 +331,13 @@ function recalc(){
   document.getElementById('buildingResult').textContent = fmt(building) + '억';
   document.getElementById('totalInput').textContent = fmt(totalInput) + '억';
   document.getElementById('assetValue').textContent = fmt(assetValue) + '억';
-  document.getElementById('difference').textContent =
-    (diff >= 0 ? '+' : '') + fmt(diff) + '억';
+  document.getElementById('roiValue').textContent =
+    building > 0 ? ((roi >= 0 ? '+' : '') + Math.round(roi) + '%') : '0%';
 
-  document.getElementById('calcLine').innerHTML =\n    '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +\n    '억</b> + 분담금 <b>' + contributionCalcText +\n    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
+  document.getElementById('calcLine').innerHTML =
+    '건물 <b>' + fmt(building) + '억</b> + 토지 <b>' + fmt(d.land) +
+    '억</b> + 분담금 <b>' + contributionCalcText +
+    '</b> = 총투입 <b>' + fmt(totalInput) + '억</b>';
 }
 
 window.addEventListener('load', function(){
